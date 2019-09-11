@@ -13,5 +13,5 @@ node server
 ```
 
 ```bash
-yarn start
+cd client && yarn start
 ```
