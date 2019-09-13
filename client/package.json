@@ -2,15 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-redux": "7.1.1",
-    "react-scripts": "3.1.1",
-    "redux": "4.0.4",
-    "redux-observable": "1.1.0",
-    "rxjs": "6.5.3"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -20,6 +11,16 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-redux": "7.1.1",
+    "react-scripts": "3.1.1",
+    "redux": "4.0.4",
+    "redux-observable": "1.1.0",
+    "rxjs": "6.5.3"
+  },
+  "devDependencies": {},
   "browserslist": {
     "production": [
       ">0.2%",

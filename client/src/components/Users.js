@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-import * as actionsCreators from '../store/actions/creators'
+import * as actionsCreators from '../store/actions/creators';
+import Button from './Button';
+import Status from './Status';
 
 
-export class Users extends Component {
+export class Users extends React.Component {
     constructor(props) {
         super(props);
 
@@ -13,24 +15,21 @@ export class Users extends Component {
     }
 
     handleFetch() {
-        return this.props.dispatch(actionsCreators.fetchUsers());
+        return actionsCreators.fetchUsers();
     }
 
     handleRemove() {
-        return this.props.dispatch(actionsCreators.removeUser(12));
+        return actionsCreators.removeUser(12);
     }
 
     render() {
-        const { status, user } = this.props;
+        const { status, user, dispatch } = this.props;
         const users = user.users;
 
         return <>
-            <div>
-                <button style={styles.button} onClick={() => this.handleFetch()}>fetch users</button>
-            </div>
-            <div>
-                <button style={styles.button} onClick={() => this.handleRemove()}>remove users</button>
-            </div>
+            <Button onClick={this.handleFetch} name="Fetch Users" dispatch={dispatch} />
+            <Button onClick={this.handleRemove} name="Remove Users" dispatch={dispatch} />
+
             <div style={styles.list}>
                 <h4>Users list</h4>
                 <ul>
@@ -51,32 +50,18 @@ export class Users extends Component {
                         : 'No users yet, make a fetch maybe'}
                 </ul>
             </div>
-            <div style={styles.status}>
-                App status: { status.pending ? 'Pending' : status.failure ? 'Failed' : 'OK' }
-            </div>
+            <Status status={status} />
         </>
     }
 }
 
 const styles = {
-    button: {
-        margin: '20px 40px 0 40px',
-        width: '200px',
-        height: '26px',
-        background: '#cda',
-    },
     list: {
         margin: '20px 40px 20px',
         padding: '10px',
-    },
-    status: {
-        width: '200px',
-        margin: '0 40px 0 40px',
-        padding: '6px',
-        boxSizing: 'border-box',
-        background: 'rgb(255, 160, 78)',
-        textAlign: 'center',
     }
 }
 
-export default connect(state => { console.log(state); return state })(Users);
+export default connect(
+    state => { console.log(state); return state }
+)(Users);

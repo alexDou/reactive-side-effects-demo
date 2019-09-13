@@ -1,7 +1,7 @@
 import { ajax } from 'rxjs/ajax';
 import { ofType } from 'redux-observable';
 import { of, concat } from 'rxjs';
-import { catchError, map, concatMap, mergeMap } from 'rxjs/operators';
+import { catchError, concatMap, mergeMap } from 'rxjs/operators';
 
 import * as actions from '../action_types';
 import * as actionCreators from './creators';
@@ -13,13 +13,12 @@ const getUsersEpic = (actions$, state$) =>
                 return concat(
                     of(actionCreators.setStatusPending()),
                     ajax.getJSON(`http://localhost:8000/users`).pipe(
-                        map(res => actionCreators.fetchUsersResult(res)),
-                        catchError(error => of(
-                            actionCreators.fetchUsersResult([]),
-                            actionCreators.setStatusFailure(),
-                        ))
+                        concatMap(res => of(
+                            actionCreators.fetchUsersResult(res),
+                            actionCreators.setStatusSuccess(),
+                        )),
+                        catchError(error => of(actionCreators.setStatusFailure()))
                     ),
-                    of(actionCreators.setStatusSuccess()),
                 );
             }
         )

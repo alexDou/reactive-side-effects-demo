@@ -22,13 +22,17 @@ http
                     'Access-Control-Allow-Origin': '*',
                 });
                 res.end(`${JSON.stringify(data)}`);
-            }
-            if (/\/users\/remove\/[0-9]+/.test(req.url)) {
+            } else if (/\/users\/remove\/[0-9]+/.test(req.url)) {
                 res.writeHead(200, {
                     'Content-Type': 'text/json',
                     'Access-Control-Allow-Origin': '*',
                 });
                 res.end(`${JSON.stringify([])}`);
+            } else {
+                res.writeHead(501, {
+                    'Access-Control-Allow-Origin': '*',
+                });
+                res.end();
             }
         } catch (e) {
             console.log(e.message);
