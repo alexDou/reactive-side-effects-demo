@@ -7,34 +7,20 @@ import Status from './Status';
 
 
 export class Users extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleFetch.bind(this);
-        this.handleRemove.bind(this);
-    }
-
-    handleFetch() {
-        return actionsCreators.fetchUsers();
-    }
-
-    handleRemove() {
-        return actionsCreators.removeUser(12);
-    }
-
     render() {
         const { status, user, dispatch } = this.props;
         const users = user.users;
 
         return <>
-            <Button onClick={this.handleFetch} name="Fetch Users" dispatch={dispatch} />
-            <Button onClick={this.handleRemove} name="Remove Users" dispatch={dispatch} />
+            <Status status={status} />
+
+            <Button onClick={actionsCreators.fetchUsers} name="Fetch Users" dispatch={dispatch} />
 
             <div style={styles.list}>
                 <h4>Users list</h4>
                 <ul>
                     {users.length
-                        ? users.map(u => <li key={u.user.email}>
+                        ? users.map((u, idx) => <li key={u.user.email}>
                             <div>
                                 <h5>
                                     Name: {u.user.username}<br/>
@@ -46,11 +32,11 @@ export class Users extends React.Component {
                                 <p>{u.profile.about}</p>
                                 <p>{u.profile.address}</p>
                             </div>
+                            <Button onClick={actionsCreators.removeUser} id={idx} name="Remove User" dispatch={dispatch} />
                         </li>)
                         : 'No users yet, make a fetch maybe'}
                 </ul>
             </div>
-            <Status status={status} />
         </>
     }
 }
@@ -62,6 +48,4 @@ const styles = {
     }
 }
 
-export default connect(
-    state => { console.log(state); return state }
-)(Users);
+export default connect(state => state)(Users);

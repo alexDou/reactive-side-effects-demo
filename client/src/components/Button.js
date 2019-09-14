@@ -12,11 +12,11 @@ const styles = {
     },
 }
 
-const Button = React.memo(({ onClick, name, dispatch }) => {
+const Button = React.memo(function Button({ onClick, name, id, dispatch }) {
 
     const handleOneClick = useCallback(() => {
-        return dispatch(onClick())
-    }, [onClick, dispatch]);
+        return dispatch(onClick(id))
+    }, [onClick, id, dispatch]);
 
     return (
         <div>

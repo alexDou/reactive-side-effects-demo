@@ -28,7 +28,6 @@ const removeUserEpic = (actions$, state$) =>
     actions$.pipe(
         ofType(actions.REMOVE_USER),
         mergeMap(action => {
-            console.log(action)
                 return concat(
                     of(actionCreators.setStatusPending()),
                     ajax.getJSON(`http://localhost:8000/users/remove/${action.payload.id}`).pipe(
